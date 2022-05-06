@@ -34,7 +34,7 @@
                     class="btn btn-primary">Re-Regist</a> --}}
             </div>
         </div>
-        <div class="card mt-5">
+        {{-- <div class="card mt-5">
             <div class="card-header">
                 Admin
             </div>
@@ -42,8 +42,8 @@
                 <h5 class="card-title">To Manage Section and Question</h5>
                 <p class="card-text">Coming Soon</p>
                 <p class="card-text">Coming Soon</p>
-                {{-- <a href="/Admin/{{ $QuartilActive->Year }}" class="btn btn-primary">Admin</a> --}}
+                <a href="/Admin/{{ $QuartilActive->Year }}" class="btn btn-primary">Admin</a>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

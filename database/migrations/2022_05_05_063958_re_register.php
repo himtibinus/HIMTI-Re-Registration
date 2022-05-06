@@ -21,7 +21,7 @@ class ReRegister extends Migration
         Schema::create('QuestionInformation', function (Blueprint $table) {
             $table->increments('ID');
             $table->string('QuestionText');
-            $table->string('QuestionDescription');
+            $table->text('QuestionDescription');
             $table->integer('IsNull');
             $table->unsignedInteger('QuestionType');
             $table->integer('IsActive')->default(1);
@@ -30,7 +30,7 @@ class ReRegister extends Migration
         Schema::create('SectionInformation', function (Blueprint $table) {
             $table->increments('ID');
             $table->string('SectionName');
-            $table->string('SectionDescription');
+            $table->text('SectionDescription');
             $table->integer('IsActive')->default(1);
         });
         Schema::create('QuestionSection', function (Blueprint $table) {
@@ -59,6 +59,8 @@ class ReRegister extends Migration
             $table->increments('ID');
             $table->year('Year');
             $table->integer('Quartil');
+            $table->string('QuartilTitle');
+            $table->text('QuartilDescription');
             $table->integer('IsActive')->default(1);
         });
         Schema::create('AdminRegistration', function (Blueprint $table) {

@@ -23,7 +23,7 @@
                 </div>
             </div>
         @endif
-        <div class="card mt-5">
+        {{-- <div class="card mt-5">
             <div class="card-header">
                 Admin
             </div>
@@ -33,6 +33,6 @@
                 <p class="card-text">Coming Soon</p>
                 <a href="/Admin/{{ $QuartilActive->Year }}" class="btn btn-primary">Admin</a>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection
