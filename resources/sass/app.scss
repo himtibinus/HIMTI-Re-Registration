@@ -1,0 +1,118 @@
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Bootstrap Icons
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+// Fonts
+@import "https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap";
+
+// Jumbotron shim for Bootstrap 5 upgrade
+.jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: #e9ecef;
+    border-radius: .3rem;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+.btn {
+    font-weight: 600;
+}
+.btn-toolbar .btn-group {
+    margin-right: .5rem;
+}
+.btn-toolbar .btn-group:last-child {
+    margin-right: 0;
+}
+.ua-android {
+    --bs-gutter-x: 1.5rem;
+}
+.ua-android .btn {
+    border-radius: 50rem;
+    padding: .375rem 1.5rem;
+}
+.ua-ios {
+    --bs-gutter-x: 1.25rem;
+}
+.ua-ios .btn {
+    border-radius: 5px;
+}
+.card {
+    border-radius: 15px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3);
+}
+.card-img-top, .card-header:first-child {
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+.card-auto {
+    flex-direction: row;
+}
+.card-img-auto {
+    height: 200px;
+    width: 200px;
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+}
+.card img {
+    max-width: 100%;
+}
+@media screen and (max-width: 575px){
+    .card-auto {
+        flex-direction: column;
+    }
+    .card-img-auto {
+        height: auto;
+        width: 100%;
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
+        border-bottom-left-radius: 0;
+    }
+}
+.ua-android .font-clock {
+    font-family:
+    /* Samsung */
+    /* NOTE: There is an unused font "Clock2017R" */
+    "SamsungOneUINum-500", Clock2016,
+    /* Xiaomi */
+    MILanProVF, "MI Lan Pro VF", MILanPro, "MI Lan Pro",
+    /* Huawei */
+    "HW-digit-Regular", "HW-digit",
+    /* Others */
+    Roboto, sans-serif;
+}
+
+.bd-content {
+    grid-area:content;
+    min-width:1px
+}
+
+@media (max-width: 767.98px) {
+    .bd-sidebar {
+    margin:0 -.75rem 1rem
+    }
+}
+.bd-sidebar {
+    grid-area:sidebar
+}
+.card-container .card {
+    margin-bottom: 20px;
+}
+.card-container .card:last-child {
+    margin-bottom: 0;
+}
+.form-group.row {
+    margin-bottom: 1rem;
+}
+.himti-header {
+    padding-bottom: 45px;
+    border-radius: 0 0 45px 45px;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.25);
+}
+

@@ -1,0 +1,3 @@
+[submodule "public/js/jurusan.js"]
+	path = public/js/jurusan.js
+	url = https://github.com/himtibinus/jurusan.js
