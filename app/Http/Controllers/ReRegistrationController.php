@@ -65,7 +65,7 @@ class ReRegistrationController extends Controller
         }
         $user = Auth::user();
         $Section =
-            DB::connection('mysql2')->select("select Distinct SectionID, SectionName, SectionDescription, NeedValidation  from questionsection AS a JOIN sectioninformation AS b ON a.SectionID = b.ID WHERE Year = '" . $Year . "' AND Quartil = '" . $Quartil . "' AND a.IsActive = '1' AND b.IsActive = '1' AND a.SectionID = '1'");
+            DB::connection('mysql2')->select("select Distinct SectionID, SectionName, SectionDescription, NeedValidation, CanGetPrev  from questionsection AS a JOIN sectioninformation AS b ON a.SectionID = b.ID WHERE Year = '" . $Year . "' AND Quartil = '" . $Quartil . "' AND a.IsActive = '1' AND b.IsActive = '1' AND a.SectionID = '1'");
         $QustionInformation =
             DB::connection('mysql2')->select("select *, a.QuestionID AS QuestionID from questionsection AS a JOIN questioninformation AS b ON a.QuestionID = b.ID 
             LEFT JOIN datainformation AS c ON c.Year = a.Year AND c.Quartil = a.Quartil AND UserID = $user->id AND c.QuestionID = a.QuestionID
@@ -110,7 +110,7 @@ class ReRegistrationController extends Controller
             $PrevButton = 0;
             $user = Auth::user();
             $Section =
-                DB::connection('mysql2')->select("select Distinct SectionID, SectionName, SectionDescription, NeedValidation  from questionsection AS a JOIN sectioninformation AS b ON a.SectionID = b.ID WHERE Year = '" . $Year . "' AND Quartil = '" . $PrevQuartil . "' AND a.IsActive = '1' AND b.IsActive = '1' AND a.SectionID = '" . $Page . "'");
+                DB::connection('mysql2')->select("select Distinct SectionID, SectionName, SectionDescription, NeedValidation, CanGetPrev  from questionsection AS a JOIN sectioninformation AS b ON a.SectionID = b.ID WHERE Year = '" . $Year . "' AND Quartil = '" . $PrevQuartil . "' AND a.IsActive = '1' AND b.IsActive = '1' AND a.SectionID = '" . $Page . "'");
             $QustionInformation =
                 DB::connection('mysql2')->select("select *, a.QuestionID AS QuestionID from questionsection AS a JOIN questioninformation AS b ON a.QuestionID = b.ID 
             LEFT JOIN datainformation AS c ON c.Year = a.Year AND c.Quartil = a.Quartil AND UserID = $user->id AND c.QuestionID = a.QuestionID
@@ -251,7 +251,7 @@ class ReRegistrationController extends Controller
         $information['Page'] = $Page;
         $user = Auth::user();
         $Section =
-            DB::connection('mysql2')->select("select Distinct SectionID, SectionName, SectionDescription, NeedValidation  from questionsection AS a JOIN sectioninformation AS b ON a.SectionID = b.ID WHERE Year = '" . $Year . "' AND Quartil = '" . $Quartil . "' AND a.IsActive = '1' AND b.IsActive = '1' AND a.SectionID = '" . $Page . "'");
+            DB::connection('mysql2')->select("select Distinct SectionID, SectionName, SectionDescription, NeedValidation, CanGetPrev  from questionsection AS a JOIN sectioninformation AS b ON a.SectionID = b.ID WHERE Year = '" . $Year . "' AND Quartil = '" . $Quartil . "' AND a.IsActive = '1' AND b.IsActive = '1' AND a.SectionID = '" . $Page . "'");
         $QustionInformation =
             DB::connection('mysql2')->select("select *, a.QuestionID AS QuestionID from questionsection AS a JOIN questioninformation AS b ON a.QuestionID = b.ID 
             LEFT JOIN datainformation AS c ON c.Year = a.Year AND c.Quartil = a.Quartil AND UserID = $user->id AND c.QuestionID = a.QuestionID
@@ -278,13 +278,28 @@ class ReRegistrationController extends Controller
     {
         $Section =
             DB::connection('mysql2')->select("select * from quartilinformation WHERE Year = '" . $Year . "'");
-        return view('Admin', ['Section' => $Section]);
+        return view('Admin/Admin', ['Section' => $Section]);
     }
     public function EditData($Year, $Quartil)
     {
-        $Section =
-            DB::connection('mysql2')->select("select * from quartilinformation WHERE Year = '" . $Year . "'");
-        return view('Admin', ['Section' => $Section]);
+        $QuartilInformation =
+            DB::connection('mysql2')->select("select * from quartilinformation WHERE Year = '" . $Year . "' AND Quartil = '" . $Quartil . "'");
+        $SectionInformation =
+            DB::connection('mysql2')->select("select SectionName, SectionDescription, NeedValidation, COUNT(*) AS TotalQuestion, SectionID from questionsection AS a JOIN sectioninformation AS b ON a.SectionID = b.ID WHERE Year = '" . $Year . "' AND Quartil = '" . $Quartil . "' AND a.IsActive = '1' AND b.IsActive = '1' GROUP BY SectionID, SectionName, SectionDescription, NeedValidation ORDER BY b.`Order`");
+        return view('Admin/EditQuartal', ['QuartilInformation' => $QuartilInformation[0], 'SectionInformation' => $SectionInformation]);
+    }
+    public function EditQuartilInformation(Request $request, $Year, $Quartil)
+    {
+        DB::connection('mysql2')->update("UPDATE `quartilinformation` SET QuartilTitle = '" . $request['QuartilTitle'] . "', QuartilDescription ='" . $request['QuartilDescription'] . "' WHERE Year = '" . $Year . "'AND Quartil = '" . $Quartil . "'");
+        return redirect('/Admin/' . $Year . '/' . $Quartil . '/Edit');
+    }
+    public function EditSection($Year, $Quartil, $Section)
+    {
+        $SectionInformation =
+            DB::connection('mysql2')->select("select * from sectioninformation WHERE ID = '" . $Section . "'");
+        $QuestionInformation =
+            DB::connection('mysql2')->select("select * from questionsection AS a JOIN questioninformation AS b ON a.SectionID = b.ID WHERE Year = '" . $Year . "' AND Quartil = '" . $Quartil . "' AND b.ID = '" . $Section . "' AND a.IsActive = '1' AND b.IsActive = '1' ORDER BY a.`Order`");
+        return view('Admin/EditSection');
     }
     public function GetPrevData($Year, $Quartil, $Page)
     {

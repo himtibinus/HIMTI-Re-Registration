@@ -12,7 +12,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h5>{{ $Section->SectionName }}</h5>
-                            @if ($PrevButton == 1)
+                            @if ($PrevButton == 1 && $Section->CanGetPrev == 1)
                                 <a class="btn btn-primary"
                                     onclick="document.getElementById('TypeForm').value='GetHistory'; document.forms[1].submit();">Get
                                     Prev Quartil Data</a>

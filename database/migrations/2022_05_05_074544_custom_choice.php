@@ -16,6 +16,7 @@ class CustomChoice extends Migration
         if (Schema::hasTable('sectioninformation')) Schema::table('sectioninformation', function (Blueprint $table) {
             $table->Integer('Order');
             $table->Integer('NeedValidation');
+            $table->Integer('CanGetPrev');
         });
     }
 
